@@ -1,0 +1,24 @@
+# Specifies the API version for Kubernetes objects
+apiVersion: v1
+
+# Defines the type of object — here, it's a Service
+kind: Service
+
+# Metadata includes the name of the service
+metadata:
+  name: nginx-service  # This is the name of the service you'll use to refer to it
+
+spec:
+  # Type of service - NodePort makes the app accessible from your local machine (browser)
+  type: NodePort
+
+  # Selector matches the pods that this service should route traffic to
+  selector:
+    app: nginx-app  # This should match the label used in your deployment.yaml
+
+  # Port settings
+  ports:
+    - port: 80          # Port that the service will listen on inside the cluster
+      targetPort: 80     # Port on the container the traffic will be forwarded to
+      nodePort: 30007    # External port on your machine to access the app (Minikube will expose this)
+                         # Must be between 30000 and 32767 for NodePort services

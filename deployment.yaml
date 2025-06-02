@@ -1,0 +1,31 @@
+# API version of the Kubernetes object we are using
+apiVersion: apps/v1
+
+# This defines the type of Kubernetes object. Here, it's a Deployment.
+kind: Deployment
+
+# Metadata provides basic info like the name and labels
+metadata:
+  name: nginx-deployment  # Name of the deployment
+  labels:
+    app: nginx-app         # Label to group and identify this deployment
+
+# Specification of the deployment
+spec:
+  replicas: 2              # We want 2 copies (pods) of the app running
+  selector:
+    matchLabels:
+      app: nginx-app       # Match pods that have this label
+
+  # Template for the pods that the deployment will create
+  template:
+    metadata:
+      labels:
+        app: nginx-app     # Label assigned to each pod created by this deployment
+
+    spec:
+      containers:
+        - name: nginx-container   # Name of the container inside the pod
+          image: nginx:latest     # Docker image to use (nginx web server)
+          ports:
+            - containerPort: 80   # Port the container exposes (standard for web)
